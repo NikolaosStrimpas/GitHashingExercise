@@ -17,7 +17,7 @@ fi
 user_number="$1"
 number_pattern='^[[:digit:]]{4}$'
 if [[ $user_number =~ $number_pattern ]]; then
-    hash=$(echo -n "$user_number" | sha256sum)
+    hash=$(echo -n "$user_number" | sha256sum | awk '{print $1}')
     echo "$hash"
 else
     echo "Argument passed to the script doesn't contain a 4 digit number" >&2
