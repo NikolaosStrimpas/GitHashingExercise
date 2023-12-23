@@ -1,0 +1,26 @@
+#!/bin/bash
+
+# Check if the number of arguments is zero
+if [[ $# -eq 0 ]]; then
+    echo "Usage: ./hash_script <4-digit-number>"
+    exit 2
+fi
+
+# Check if the user passed more than one arguments
+if [[ $# -gt 1 ]]; then
+    echo "Illegal number of parameters" >&2
+    echo "Usage: ./hash_script <4-digit-number>"
+    exit 2
+fi
+
+# Check if the argument passed is a 4 digit number
+user_number="$1"
+number_pattern='^[[:digit:]]{4}$'
+if [[ $user_number =~ $number_pattern ]]; then
+    hash=$(echo -n "$user_number" | sha256sum)
+    echo "$hash"
+else
+    echo "Argument passed to the script doesn't contain a 4 digit number" >&2
+    echo "Usage: ./hash_script <4-digit-number>"
+    exit 2
+fi
